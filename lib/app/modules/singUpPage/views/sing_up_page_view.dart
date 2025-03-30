@@ -6,11 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../common/widgets/buttons/customInput.dart';
 import '../../../../common/widgets/buttons/primary_buttons.dart';
-import '../../../routes/app_pages.dart';
 import '../controllers/sing_up_page_controller.dart';
 
 class SingUpPageView extends GetView<SingUpPageController> {
   const SingUpPageView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,17 +66,17 @@ class SingUpPageView extends GetView<SingUpPageController> {
                   children: [
                     Expanded(
                       child: CustomInputField(
-                 //       svgIconPath: AppImage.userIcon,
-                        hintText: 'Enter Name',
-                        controller: TextEditingController(),
+                        //       svgIconPath: AppImage.userIcon,
+                        hintText: 'First Name',
+                        controller: controller.userNameController,
                       ),
                     ),
                     SizedBox(width: 16.h),
                     Expanded(
                       child: CustomInputField(
-                   //     svgIconPath: AppImage.userIcon,
-                        hintText: 'Enter Name',
-                        controller: TextEditingController(),
+                        //     svgIconPath: AppImage.userIcon,
+                        hintText: 'Last Name',
+                        controller: controller.lastName,
                       ),
                     ),
                   ],
@@ -91,24 +91,11 @@ class SingUpPageView extends GetView<SingUpPageController> {
                 ),
                 SizedBox(height: 4.h),
                 CustomInputField(
-             //     svgIconPath: AppImage.emailIcon,
+                  //     svgIconPath: AppImage.emailIcon,
                   hintText: 'Enter Email',
-                  controller: TextEditingController(),
+                  controller: controller.emailController,
                 ),
                 SizedBox(height: 16.h),
-                // IntlPhoneField(
-                //   decoration: InputDecoration(
-                //     labelText: 'Phone Number',
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(8.0),
-                //       borderSide: BorderSide(color: Color(0xFF7C15E6)),
-                //     ),
-                //   ),
-                //   initialCountryCode: 'BN',
-                //   onChanged: (phone) {
-                //     print(phone.completeNumber);
-                //   },
-                // ),
 
                 Text(
                   "Password",
@@ -119,9 +106,9 @@ class SingUpPageView extends GetView<SingUpPageController> {
                 ),
                 SizedBox(height: 4.h),
                 CustomInputField(
-              //    svgIconPath: AppImage.lockIcon,
+                  //    svgIconPath: AppImage.lockIcon,
                   hintText: 'Enter password',
-                  controller: TextEditingController(),
+                  controller: controller.passwordController,
                   isPassword: true,
                 ),
                 SizedBox(height: 16.h),
@@ -135,9 +122,9 @@ class SingUpPageView extends GetView<SingUpPageController> {
                 ),
                 SizedBox(height: 4.h),
                 CustomInputField(
-                //  svgIconPath: AppImage.lockIcon,
+                  //  svgIconPath: AppImage.lockIcon,
                   hintText: 'Enter password',
-                  controller: TextEditingController(),
+                  controller: controller.cnfpasswordController,
                   isPassword: true,
                 ),
                 SizedBox(height: 16.h),
@@ -162,9 +149,9 @@ class SingUpPageView extends GetView<SingUpPageController> {
                 SizedBox(height: 16.h),
                 PrimaryButton(
                   onPressed: () {
-               //    Get.toNamed(Routes.HOME);
+                    controller.registerAnAccount();
                   },
-                  text: "Next",
+                  text: "SignUp",
                   width: double.infinity,
                 ),
               ],

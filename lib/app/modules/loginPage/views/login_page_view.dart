@@ -48,7 +48,7 @@ class LoginPageView extends GetView<LoginPageController> {
               CustomInputField(
                 //         svgIconPath: AppImage.emailIcon,
                 hintText: 'Enter Email',
-                controller: TextEditingController(),
+                controller: controller.loginEmail,
               ),
               SizedBox(height: 16.h),
 
@@ -63,7 +63,7 @@ class LoginPageView extends GetView<LoginPageController> {
               CustomInputField(
                 //  svgIconPath: AppImage.lockIcon,
                 hintText: 'Enter password',
-                controller: TextEditingController(),
+                controller: controller.loginPass,
                 isPassword: true,
               ),
               SizedBox(height: 16.h),
@@ -87,7 +87,7 @@ class LoginPageView extends GetView<LoginPageController> {
               SizedBox(height: 32.h),
               PrimaryButton(
                 onPressed: () {
-                  Get.toNamed(Routes.HOME);
+                  controller.loginVaiya();
                 },
                 text: "Sign In",
                 width: double.infinity,

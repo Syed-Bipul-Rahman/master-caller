@@ -39,10 +39,10 @@ class AppPages {
       page: () => const SplashView(),
       binding: SplashBinding(),
     ),
-    GetPage(
-      name: _Paths.CALL_SCREEN,
-      page: () => const CallScreenView(),
-      binding: CallScreenBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.CALL_SCREEN,
+    //   page: () =>  CallScreenView(),
+    //   binding: CallScreenBinding(),
+    // ),
   ];
 }
