@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../common/widgets/buttons/customInput.dart';
+import '../../../../common/widgets/buttons/primary_buttons.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/login_page_controller.dart';
 
 class LoginPageView extends GetView<LoginPageController> {
@@ -41,7 +46,7 @@ class LoginPageView extends GetView<LoginPageController> {
               ),
               SizedBox(height: 4.h),
               CustomInputField(
-                svgIconPath: AppImage.emailIcon,
+       //         svgIconPath: AppImage.emailIcon,
                 hintText: 'Enter Email',
                 controller: TextEditingController(),
               ),
@@ -56,7 +61,7 @@ class LoginPageView extends GetView<LoginPageController> {
               ),
               SizedBox(height: 4.h),
               CustomInputField(
-                svgIconPath: AppImage.lockIcon,
+              //  svgIconPath: AppImage.lockIcon,
                 hintText: 'Enter password',
                 controller: TextEditingController(),
                 isPassword: true,
@@ -67,7 +72,7 @@ class LoginPageView extends GetView<LoginPageController> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.toNamed(Routes.FORGOT_PASSWORD);
+               //       Get.toNamed(Routes.FORGOT_PASSWORD);
                     },
                     child: Text(
                       "Forgot Password?",
@@ -100,7 +105,7 @@ class LoginPageView extends GetView<LoginPageController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(Routes.SIGN_UP_PAGE);
+                    //  Get.toNamed(Routes.SIGN_UP_PAGE);
                     },
                     child: Text(
                       "Sign up",

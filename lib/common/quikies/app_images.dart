@@ -1,0 +1,47 @@
+class AppImage {
+  AppImage._();
+
+  static String baseUrl = "assets/images";
+  static String appLogo = "$baseUrl/appLogo.svg";
+  static String splashPage = "$baseUrl/splash_screen.png";
+  static String emailIcon = "$baseUrl/emailIcon.svg";
+  static String lockIcon = "$baseUrl/lockIcon.svg";
+  static String userIcon = "$baseUrl/userIcon.svg";
+  static String locationIcon = "$baseUrl/locationIcon.svg";
+  static String dateIcon = "$baseUrl/dateIcon.svg";
+  static String llinkedInIcon = "$baseUrl/llinkedInIcon.svg";
+  static String facebookIcon = "$baseUrl/facebookIcon.svg";
+  static String instagramIcon = "$baseUrl/instagramIcon.svg";
+  static String faceVerifyIcon = "$baseUrl/faceVerifyIcon.svg";
+  static String onbordingImages = "$baseUrl/onbordingImages.png";
+  static String checkMark = "$baseUrl/checkMark.svg";
+  static String notificationImage = "$baseUrl/notificationImage.svg";
+  static String searchImage = "$baseUrl/searchImage.svg";
+  static String appImage = "$baseUrl/appImage.png";
+  static String editIcon = "$baseUrl/editIcon.svg";
+  static String postImageIcon = "$baseUrl/postImageIcon.svg";
+  static String postLikeButton = "$baseUrl/postLikeButton.svg";
+  static String commentIcon = "$baseUrl/commentIcon.svg";
+  static String shareIcon = "$baseUrl/shareIcon.svg";
+  static String filledLike = "$baseUrl/filledLike.svg";
+  static String navHomeIcon = "$baseUrl/navHome.svg";
+  static String navOfferIcon = "$baseUrl/iconOffer.svg";
+  static String navScheduleIcon = "$baseUrl/navScheduleIcon.svg";
+  static String navRestaurantIcon = "$baseUrl/navRestaurantIcon.svg";
+  static String navChatIcon = "$baseUrl/navChatIcon.svg";
+  static String navProfileIcon = "$baseUrl/navProfileIcon.svg";
+  static String optionsIcon = "$baseUrl/optionsIcon.svg";
+  static String notificationIcon = "$baseUrl/notificationIcon.svg";
+  static String filterIcon = "$baseUrl/filterIcon.svg";
+  static String verticalThreeDot = "$baseUrl/verticalThreeDot.svg";
+  static String starIcon = "$baseUrl/starIcon.svg";
+  static String userIconReg = "$baseUrl/userIconReg.svg";
+  static String restaurantIcon = "$baseUrl/restaurantIcon.svg";
+  static String dialogueBg = "$baseUrl/dialogueBg.svg";
+  static String verifiedIcon = "$baseUrl/verifiedIcon.svg";
+  static String gotoMainChatButton = "$baseUrl/gotoMainChatButton.svg";
+  static String videoCallIcon = "$baseUrl/videoCallIcon.svg";
+  static String informationforCallIcon = "$baseUrl/informationforCallIcon.svg";
+  static String audioCall = "$baseUrl/audioCall.svg";
+  static String videoCall = "$baseUrl/videoCall.svg";
+}
