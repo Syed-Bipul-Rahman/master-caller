@@ -87,7 +87,7 @@ class LoginPageView extends GetView<LoginPageController> {
               SizedBox(height: 32.h),
               PrimaryButton(
                 onPressed: () {
-                  Get.toNamed(Routes.HOME);
+                  Get.toNamed(Routes.SING_UP_PAGE);
                 },
                 text: "Sign In",
                 width: double.infinity,
