@@ -26,6 +26,16 @@ dependencies:
   flutter_svg:
   intl:
   http:
+  firebase_core:
+  firebase_messaging:
+  flutter_local_notifications:
+  firebase_analytics:
+  agora_rtc_engine:
+  audioplayers:
+  workmanager:
+  flutter_login: ^5.0.0
+  wakelock_plus: ^1.2.10
+  mime_type:
 
 dev_dependencies:
   flutter_test:

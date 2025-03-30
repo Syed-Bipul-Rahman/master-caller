@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/callScreen/bindings/call_screen_binding.dart';
+import '../modules/callScreen/views/call_screen_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/loginPage/bindings/login_page_binding.dart';
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.SPLASH,
       page: () => const SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.CALL_SCREEN,
+      page: () => const CallScreenView(),
+      binding: CallScreenBinding(),
     ),
   ];
 }

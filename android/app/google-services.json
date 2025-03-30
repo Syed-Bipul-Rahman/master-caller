@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "5276167370",
+    "project_id": "agoravideocall-6b8e9",
+    "storage_bucket": "agoravideocall-6b8e9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5276167370:android:922c323e84274d51c51833",
+        "android_client_info": {
+          "package_name": "com.syedbipul.mastercaller.master_caller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8k5X2o94GIZAS0nKKpRwecktDR2hJSSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
