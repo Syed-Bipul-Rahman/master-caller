@@ -1,4 +1,4 @@
-import 'package:dating_restaurant/app/routes/app_pages.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -39,12 +39,12 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   // Define routes for each index
   final List<String> _routes = [
-    Routes.HOME,
-    Routes.OFFER_INVITE_PAGE,
-    Routes.SCHEDULE_PAGE,
-    Routes.RESTAURANT_PAGE,
-    Routes.CHAT_PAGE,
-    Routes.PROFILE_PAGE,
+    // Routes.HOME,
+    // Routes.OFFER_INVITE_PAGE,
+    // Routes.SCHEDULE_PAGE,
+    // Routes.RESTAURANT_PAGE,
+    // Routes.CHAT_PAGE,
+    // Routes.PROFILE_PAGE,
   ];
 
   @override
