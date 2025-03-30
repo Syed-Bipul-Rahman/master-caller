@@ -6,6 +6,8 @@ import '../modules/loginPage/bindings/login_page_binding.dart';
 import '../modules/loginPage/views/login_page_view.dart';
 import '../modules/singUpPage/bindings/sing_up_page_binding.dart';
 import '../modules/singUpPage/views/sing_up_page_view.dart';
+import '../modules/splash/bindings/splash_binding.dart';
+import '../modules/splash/views/splash_view.dart';
 
 part 'app_routes.dart';
 
@@ -29,6 +31,11 @@ class AppPages {
       name: _Paths.SING_UP_PAGE,
       page: () => const SingUpPageView(),
       binding: SingUpPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASH,
+      page: () => const SplashView(),
+      binding: SplashBinding(),
     ),
   ];
 }

@@ -46,7 +46,7 @@ class LoginPageView extends GetView<LoginPageController> {
               ),
               SizedBox(height: 4.h),
               CustomInputField(
-       //         svgIconPath: AppImage.emailIcon,
+                //         svgIconPath: AppImage.emailIcon,
                 hintText: 'Enter Email',
                 controller: TextEditingController(),
               ),
@@ -61,7 +61,7 @@ class LoginPageView extends GetView<LoginPageController> {
               ),
               SizedBox(height: 4.h),
               CustomInputField(
-              //  svgIconPath: AppImage.lockIcon,
+                //  svgIconPath: AppImage.lockIcon,
                 hintText: 'Enter password',
                 controller: TextEditingController(),
                 isPassword: true,
@@ -72,7 +72,7 @@ class LoginPageView extends GetView<LoginPageController> {
                 children: [
                   InkWell(
                     onTap: () {
-               //       Get.toNamed(Routes.FORGOT_PASSWORD);
+                      //       Get.toNamed(Routes.FORGOT_PASSWORD);
                     },
                     child: Text(
                       "Forgot Password?",
@@ -87,7 +87,7 @@ class LoginPageView extends GetView<LoginPageController> {
               SizedBox(height: 32.h),
               PrimaryButton(
                 onPressed: () {
-                  Get.toNamed(Routes.SING_UP_PAGE);
+                  Get.toNamed(Routes.HOME);
                 },
                 text: "Sign In",
                 width: double.infinity,
@@ -105,7 +105,7 @@ class LoginPageView extends GetView<LoginPageController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                    //  Get.toNamed(Routes.SIGN_UP_PAGE);
+                      Get.toNamed(Routes.SING_UP_PAGE);
                     },
                     child: Text(
                       "Sign up",

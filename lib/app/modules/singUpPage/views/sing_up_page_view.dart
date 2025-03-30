@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../common/widgets/buttons/customInput.dart';
 import '../../../../common/widgets/buttons/primary_buttons.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/sing_up_page_controller.dart';
 
 class SingUpPageView extends GetView<SingUpPageController> {
@@ -161,7 +162,7 @@ class SingUpPageView extends GetView<SingUpPageController> {
                 SizedBox(height: 16.h),
                 PrimaryButton(
                   onPressed: () {
-                 //   Get.toNamed(Routes.USER_SIGN_UP_SECOND_PAGE);
+               //    Get.toNamed(Routes.HOME);
                   },
                   text: "Next",
                   width: double.infinity,
