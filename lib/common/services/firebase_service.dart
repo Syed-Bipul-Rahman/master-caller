@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:master_caller/app/modules/callScreen/views/call_screen_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:workmanager/workmanager.dart';
+// import 'package:workmanager/workmanager.dart';
 
 import '../replacements/call_screen_presenter.dart';
 import '../replacements/constants.dart';
@@ -34,10 +34,10 @@ class NotificationService {
     static Future<void> initialize() async {
     try {
       // Initialize WorkManager
-      await Workmanager().initialize(
-        callbackDispatcher,
-        isInDebugMode: true,
-      );
+      // await Workmanager().initialize(
+      //   callbackDispatcher,
+      //   isInDebugMode: true,
+      // );
 
       // Initialize local notifications
       await _initializeLocalNotifications();
@@ -153,7 +153,7 @@ class NotificationService {
       );
 
       // Register background handler
-      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+      // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
       // Get and store FCM token
       await _getFcmToken();
@@ -200,7 +200,7 @@ class NotificationService {
 
       // Start foreground service for call (Android only)
       if (Platform.isAndroid) {
-        _startCallForegroundService(message);
+        // _startCallForegroundService(message);
       }
     } else {
       _showRegularNotification(
@@ -462,6 +462,10 @@ class NotificationService {
     }
   }
 
+  /*
+
+  TODO: Temporary comment for remove work manager
+
   // Start foreground service for call (Android only)
   static Future<void> _startCallForegroundService(RemoteMessage message) async {
     if (Platform.isAndroid) {
@@ -530,6 +534,8 @@ void callbackDispatcher() {
     }
   });
 }
+
+*/
 
 // Notification check background task
 Future<void> _performNotificationCheck() async {
@@ -687,4 +693,4 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     await prefs.setBool('has_active_call', true);
     await prefs.setString('active_call_data', jsonEncode(callData));
   }
-}
+}}

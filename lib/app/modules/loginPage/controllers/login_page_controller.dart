@@ -8,6 +8,7 @@ import 'package:master_caller/app/routes/app_pages.dart';
 import '../../../../common/replacements/api_checker.dart';
 import '../../../../common/replacements/api_client.dart';
 import '../../../../common/replacements/api_constants.dart';
+import '../../../../common/replacements/constants.dart';
 import '../../../../common/replacements/enum_file.dart';
 import '../../../../common/replacements/prefs_helpers.dart';
 
@@ -19,10 +20,14 @@ class LoginPageController extends GetxController {
   TextEditingController loginPass = TextEditingController();
 
   loginVaiya() async {
+    var fcmToken = await PrefsHelper.getString(Constants.fcmToken);
+
+
     isLoading(true);
     Map<String, dynamic> body = {
       "email": loginEmail.text,
       "password": loginPass.text,
+      "fcmToken":fcmToken
     };
 
     var headers = {'Content-Type': 'application/json'};

@@ -1,6 +1,6 @@
 name: master_caller
 description: "A new Flutter project."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -32,7 +32,7 @@ dependencies:
   firebase_analytics:
   agora_rtc_engine:
   audioplayers:
-  workmanager: ^0.5.2
+#  workmanager: ^0.5.2
   flutter_login: ^5.0.0
   wakelock_plus: ^1.2.10
   mime_type:
