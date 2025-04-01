@@ -269,17 +269,11 @@ class NotificationService {
       'caller_profile_pic': message.data['caller_profile_pic'],
     };
 
-    // 3. Store call data temporarily (existing code)
     await _storeCallData(callData);
-
-    // 4. Open call screen with reliable navigation (existing code)
     _openCallScreen(callData);
-
-    // 5. NEW: Present call screen even when locked
     await CallScreenPresenter.presentCallScreen(callData);
   }
 
-  // Store call data temporarily
   static Future<void> _storeCallData(Map<String, dynamic> callData) async {
     try {
       // Store as JSON string
@@ -537,7 +531,7 @@ class NotificationService {
   }
 
   // Handle call-related tasks in the background
-  static  Future<void> _handleCallServiceTask(Map<String, dynamic> data) async {
+  static Future<void> _handleCallServiceTask(Map<String, dynamic> data) async {
     try {
       String roomId = data['roomId'] ?? '';
       String callerName = data['callerName'] ?? 'Unknown Caller';
