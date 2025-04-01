@@ -537,7 +537,7 @@ class NotificationService {
   }
 
   // Handle call-related tasks in the background
-  Future<void> _handleCallServiceTask(Map<String, dynamic> data) async {
+  static  Future<void> _handleCallServiceTask(Map<String, dynamic> data) async {
     try {
       String roomId = data['roomId'] ?? '';
       String callerName = data['callerName'] ?? 'Unknown Caller';
@@ -550,7 +550,7 @@ class NotificationService {
       await prefs.setString('active_call_data', jsonEncode(data));
 
       // Show notification
-      await _refreshCallNotification(data);
+      // await _refreshCallNotification(data);
 
       // Perform necessary actions for handling the call
       await _showCallNotification(RemoteMessage(data: data));

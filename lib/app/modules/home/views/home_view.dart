@@ -27,53 +27,58 @@ class _HomeViewState extends State<HomeView> {
         leading: Text(""),
       ),
       body: SafeArea(
-        child:
-            _controller.isLoading.value
-                ? CircularProgressIndicator()
-                : Obx(() {
-                  return ListView.separated(
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              _controller.makeCall(
-                                context,
-                                _controller.userList[index].fcmToken ?? "",
-                              );
-                            },
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.supervised_user_circle_rounded,
-                                  ),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${_controller.userList[index].username}",
-                                    ),
-                                    Text(
-                                      "${_controller.userList[index].email}",
-                                    ),
-                                    Text("${_controller.userList[index].id}"),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+        child: Obx(() {
+          if (_controller.isLoading.value) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (_controller.userList.isEmpty) {
+            return Center(child: Text("No users found"));
+          }
+
+          return ListView.separated(
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _controller.makeCall(
+                        context,
+                        _controller.userList[index].fcmToken ?? "",
                       );
                     },
-                    separatorBuilder: (contex, index) {
-                      return Divider();
-                    },
-                    itemCount: _controller.userList.length,
-                  );
-                }),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.supervised_user_circle_rounded,
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${_controller.userList[index].username}",
+                            ),
+                            Text(
+                              "${_controller.userList[index].email}",
+                            ),
+                            Text("${_controller.userList[index].id}"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+            separatorBuilder: (contex, index) {
+              return Divider();
+            },
+            itemCount: _controller.userList.length,
+          );
+        }),
       ),
     );
   }
