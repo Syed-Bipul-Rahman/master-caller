@@ -8,6 +8,7 @@ abstract class Routes {
   static const SING_UP_PAGE = _Paths.SING_UP_PAGE;
   static const SPLASH = _Paths.SPLASH;
   static const CALL_SCREEN = _Paths.CALL_SCREEN;
+  static const AGORA_CONNECT = _Paths.AGORA_CONNECT;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const SING_UP_PAGE = '/sing-up-page';
   static const SPLASH = '/splash';
   static const CALL_SCREEN = '/call-screen';
+  static const AGORA_CONNECT = '/agora-connect';
 }

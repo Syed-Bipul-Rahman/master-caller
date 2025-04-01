@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/agoraConnect/bindings/agora_connect_binding.dart';
+import '../modules/agoraConnect/views/agora_connect_view.dart';
 import '../modules/callScreen/bindings/call_screen_binding.dart';
 import '../modules/callScreen/views/call_screen_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -44,5 +46,10 @@ class AppPages {
     //   page: () =>  CallScreenView(),
     //   binding: CallScreenBinding(),
     // ),
+    GetPage(
+      name: _Paths.AGORA_CONNECT,
+      page: () => const AgoraConnectView(),
+      binding: AgoraConnectBinding(),
+    ),
   ];
 }

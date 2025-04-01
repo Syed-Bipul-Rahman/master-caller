@@ -2,8 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
-
+import 'package:master_caller/app/routes/app_pages.dart';
 
 class CallScreenView extends StatefulWidget {
   final Map<String, dynamic> callData;
@@ -49,17 +48,23 @@ class _CallScreenViewState extends State<CallScreenView> {
               children: [
                 CircleAvatar(
                   radius: 60,
-                  backgroundImage: widget.callData['caller_profile_pic'] != null
-                      ? NetworkImage(widget.callData['caller_profile_pic'])
-                      : null,
-                  child: widget.callData['caller_profile_pic'] == null
-                      ? Icon(Icons.person, size: 80, color: Colors.white)
-                      : null,
+                  backgroundImage:
+                      widget.callData['caller_profile_pic'] != null
+                          ? NetworkImage(widget.callData['caller_profile_pic'])
+                          : null,
+                  child:
+                      widget.callData['caller_profile_pic'] == null
+                          ? Icon(Icons.person, size: 80, color: Colors.white)
+                          : null,
                 ),
                 SizedBox(height: 20),
                 Text(
                   widget.callData['callerName'] ?? 'Unknown Caller',
-                  style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(height: 10),
                 Text(
@@ -94,19 +99,9 @@ class _CallScreenViewState extends State<CallScreenView> {
                 // Accept button
                 GestureDetector(
                   onTap: () {
-                    // Accept call logic
+                    // Accepted call , sent to the agora connect page
                     _audioPlayer.stop();
-                    // TODO: Navigate to actual call screen or start call
-
-                    // Example:
-                    // Navigator.of(context).pushReplacement(
-                    //   MaterialPageRoute(
-                    //     builder: (_) => AgoraCallScreen(
-                    //       roomId: widget.callData['roomId'],
-                    //       callType: widget.callData['callType'],
-                    //     ),
-                    //   ),
-                    // );
+                    Get.toNamed(Routes.AGORA_CONNECT);
                   },
                   child: Container(
                     width: 70,
