@@ -1,9 +1,12 @@
 // notification_service.dart
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:master_caller/app/modules/callScreen/views/call_screen_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,11 +16,10 @@ import '../replacements/call_screen_presenter.dart';
 import '../replacements/constants.dart';
 import '../replacements/prefs_helpers.dart';
 
-
 // Create a dedicated notification service class
 class NotificationService {
   static final FlutterLocalNotificationsPlugin
-      _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   static final FirebaseMessaging _firebaseMessaging =
       FirebaseMessaging.instance;
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -31,7 +33,7 @@ class NotificationService {
   static const String _notificationCheckTask = 'notificationCheckTask';
   static const String _callServiceTask = 'callServiceTask';
 
-    static Future<void> initialize() async {
+  static Future<void> initialize() async {
     try {
       // Initialize WorkManager
       // await Workmanager().initialize(
@@ -53,6 +55,8 @@ class NotificationService {
 
       // NEW: Initialize call screen presenter
       await initializeCallScreenPresenter();
+      // NEW: Initialize call screen presenter
+      await initializeCallScreenPresenter();
 
       print('📱 Notification service initialized successfully');
     } catch (e) {
@@ -60,17 +64,16 @@ class NotificationService {
     }
   }
 
-
   // Initialize local notifications with proper channels
   static Future<void> _initializeLocalNotifications() async {
     const AndroidInitializationSettings androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
     const DarwinInitializationSettings iOSSettings =
         DarwinInitializationSettings(
-      requestSoundPermission: true,
-      requestBadgePermission: true,
-      requestAlertPermission: true,
-    );
+          requestSoundPermission: true,
+          requestBadgePermission: true,
+          requestAlertPermission: true,
+        );
 
     final InitializationSettings initSettings = InitializationSettings(
       android: androidSettings,
@@ -86,7 +89,8 @@ class NotificationService {
     // Request notification permissions
     _flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.requestNotificationsPermission();
 
     // Create notification channels for Android
@@ -95,11 +99,13 @@ class NotificationService {
     }
   }
 
-// Create notification channels (Android)
+  // Create notification channels (Android)
   static Future<void> _createNotificationChannels() async {
     final AndroidFlutterLocalNotificationsPlugin? androidPlugin =
-    _flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+        _flutterLocalNotificationsPlugin
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >();
 
     if (androidPlugin != null) {
       // Create call notification channel (high priority)
@@ -116,12 +122,13 @@ class NotificationService {
       );
 
       // Create default notification channel
-      const AndroidNotificationChannel defaultChannel = AndroidNotificationChannel(
-        _defaultChannelId,
-        'Default Notifications',
-        description: 'Used for regular app notifications',
-        importance: Importance.high,
-      );
+      const AndroidNotificationChannel defaultChannel =
+          AndroidNotificationChannel(
+            _defaultChannelId,
+            'Default Notifications',
+            description: 'Used for regular app notifications',
+            importance: Importance.high,
+          );
 
       // Create the notification channels individually
       await androidPlugin.createNotificationChannel(callChannel);
@@ -223,7 +230,8 @@ class NotificationService {
   // Handle initial message (app opened from terminated state)
   static void _handleInitialMessage(RemoteMessage message) {
     print(
-        '🔔 App opened from terminated state notification: ${message.messageId}');
+      '🔔 App opened from terminated state notification: ${message.messageId}',
+    );
     _logMessageData(message);
 
     // Add small delay to ensure app is fully initialized
@@ -247,7 +255,7 @@ class NotificationService {
     await CallScreenPresenter.initialize();
   }
 
-// Modify your _handleIncomingCall method to include this:
+  // Modify your _handleIncomingCall method to include this:
   static void _handleIncomingCall(RemoteMessage message) async {
     // 1. Show high-priority notification first (existing code)
     await _showCallNotification(message);
@@ -270,7 +278,6 @@ class NotificationService {
     // 5. NEW: Present call screen even when locked
     await CallScreenPresenter.presentCallScreen(callData);
   }
-
 
   // Store call data temporarily
   static Future<void> _storeCallData(Map<String, dynamic> callData) async {
@@ -313,22 +320,24 @@ class NotificationService {
       // Use navigatorKey for navigation when app is in foreground
       if (navigatorKey.currentState != null) {
         navigatorKey.currentState!.push(
-          MaterialPageRoute(
-            builder: (_) => CallScreenView(callData: callData),
-          ),
+          MaterialPageRoute(builder: (_) => CallScreenView(callData: callData)),
         );
       } else {
         // For Android, we'll rely on the full screen intent in the notification
         // No need to try to start activity directly
-        print('🔔 Navigator not available, relying on notification full screen intent');
+        print(
+          '🔔 Navigator not available, relying on notification full screen intent',
+        );
 
         // Re-show notification with full screen intent
-        _showCallNotification(RemoteMessage(
+        _showCallNotification(
+          RemoteMessage(
             data: {
               'roomId': callData['roomId'] ?? '',
-              'callerName': callData['callerName'] ?? 'Unknown Caller'
-            }
-        ));
+              'callerName': callData['callerName'] ?? 'Unknown Caller',
+            },
+          ),
+        );
       }
     } catch (e) {
       print('🚨 Error opening call screen: $e');
@@ -341,20 +350,20 @@ class NotificationService {
       // Android notification details
       const AndroidNotificationDetails androidDetails =
           AndroidNotificationDetails(
-        _callChannelId,
-        'Call Notifications',
-        channelDescription: 'Used for incoming call notifications',
-        importance: Importance.max,
-        priority: Priority.max,
-        showWhen: true,
-        enableVibration: true,
-        playSound: true,
-        sound: RawResourceAndroidNotificationSound('incoming_call'),
-        fullScreenIntent: true,
-        category: AndroidNotificationCategory.call,
-        visibility: NotificationVisibility.public,
-        timeoutAfter: 60000,
-      );
+            _callChannelId,
+            'Call Notifications',
+            channelDescription: 'Used for incoming call notifications',
+            importance: Importance.max,
+            priority: Priority.max,
+            showWhen: true,
+            enableVibration: true,
+            playSound: true,
+            sound: RawResourceAndroidNotificationSound('incoming_call'),
+            fullScreenIntent: true,
+            category: AndroidNotificationCategory.call,
+            visibility: NotificationVisibility.public,
+            timeoutAfter: 60000,
+          );
 
       // iOS notification details
       const DarwinNotificationDetails iOSDetails = DarwinNotificationDetails(
@@ -398,12 +407,12 @@ class NotificationService {
     try {
       const AndroidNotificationDetails androidDetails =
           AndroidNotificationDetails(
-        _defaultChannelId,
-        'Default Notifications',
-        channelDescription: 'Used for regular app notifications',
-        importance: Importance.high,
-        priority: Priority.high,
-      );
+            _defaultChannelId,
+            'Default Notifications',
+            channelDescription: 'Used for regular app notifications',
+            importance: Importance.high,
+            priority: Priority.high,
+          );
 
       const DarwinNotificationDetails iOSDetails = DarwinNotificationDetails(
         presentAlert: true,
@@ -460,6 +469,103 @@ class NotificationService {
     } catch (e) {
       print('🚨 Error handling call notification tap: $e');
     }
+  }
+
+  //Instead of workmanager let's use flutter background service
+
+  // Initialize flutter_background_service
+  static Future<void> _initializeBackgroundService() async {
+    final service = FlutterBackgroundService();
+    await service.configure(
+      androidConfiguration: AndroidConfiguration(
+        onStart: onStart,
+        autoStart: true,
+        isForegroundMode: true,
+        notificationChannelId: _callChannelId,
+        initialNotificationTitle: 'Service Running',
+        initialNotificationContent: 'Maintaining connectivity',
+        foregroundServiceNotificationId: 888,
+      ),
+      iosConfiguration: IosConfiguration(
+        autoStart: true,
+        onForeground: onStart,
+        onBackground: onIosBackground,
+      ),
+    );
+    service.startService();
+  }
+
+  // Background service entry point
+  @pragma('vm:entry-point')
+  static Future<void> onStart(ServiceInstance service) async {
+    DartPluginRegistrant.ensureInitialized();
+    await Firebase.initializeApp();
+
+    if (service is AndroidServiceInstance) {
+      service.setForegroundNotificationInfo(
+        title: 'Background Service',
+        content: 'Running',
+      );
+    }
+
+    // Handle call-related tasks
+    service.on('start_call_service').listen((message) async {
+      if (message != null) {
+        await _handleCallServiceTask(message);
+      }
+    });
+
+    // Periodic notification checks
+    // Timer.periodic(const Duration(minutes: 15), (timer) async {
+    //   if (service is AndroidServiceInstance && await service.isForegroundService()) {
+    //     await _performNotificationCheck();
+    //   }
+    // });
+
+    // Stop the service when requested
+    service.on('stop').listen((message) {
+      service.stopSelf();
+    });
+  }
+
+  // iOS background handler
+  @pragma('vm:entry-point')
+  static Future<bool> onIosBackground(ServiceInstance service) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    DartPluginRegistrant.ensureInitialized();
+    return true;
+  }
+
+  // Handle call-related tasks in the background
+  Future<void> _handleCallServiceTask(Map<String, dynamic> data) async {
+    try {
+      String roomId = data['roomId'] ?? '';
+      String callerName = data['callerName'] ?? 'Unknown Caller';
+      String callType = data['callType'] ?? 'video';
+
+      print('📞 Handling call task for roomId=$roomId, callerName=$callerName');
+      // Store call data
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('has_active_call', true);
+      await prefs.setString('active_call_data', jsonEncode(data));
+
+      // Show notification
+      await _refreshCallNotification(data);
+
+      // Perform necessary actions for handling the call
+      await _showCallNotification(RemoteMessage(data: data));
+
+      // Optionally open the call screen directly if required
+      _openCallScreen(data);
+    } catch (e) {
+      print('🚨 Error in call task handler: $e');
+    }
+  }
+
+  // Schedule periodic work for notification checks
+  static void _schedulePeriodicWork() {
+    final service = FlutterBackgroundService();
+    service.invoke('schedule_notification_checks');
   }
 
   /*
@@ -537,125 +643,48 @@ void callbackDispatcher() {
 
 */
 
-// Notification check background task
-Future<void> _performNotificationCheck() async {
-  try {
-    // Check if there's an active call
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool hasActiveCall = prefs.getBool('has_active_call') ?? false;
+  // Notification check background task
+  Future<void> _performNotificationCheck() async {
+    try {
+      // Check if there's an active call
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool hasActiveCall = prefs.getBool('has_active_call') ?? false;
 
-    if (hasActiveCall) {
-      // Ensure notification is still visible
-      String callDataStr = prefs.getString('active_call_data') ?? '';
-      if (callDataStr.isNotEmpty) {
-        Map<String, dynamic> callData = jsonDecode(callDataStr);
+      if (hasActiveCall) {
+        // Ensure notification is still visible
+        String callDataStr = prefs.getString('active_call_data') ?? '';
+        if (callDataStr.isNotEmpty) {
+          Map<String, dynamic> callData = jsonDecode(callDataStr);
 
-        // Show notification again if needed
-        await _refreshCallNotification(callData);
+          // Show notification again if needed
+          await _refreshCallNotification(callData);
+        }
       }
+    } catch (e) {
+      print('🚨 Error in notification check: $e');
     }
-  } catch (e) {
-    print('🚨 Error in notification check: $e');
   }
-}
 
-// Refresh call notification to ensure it's visible
-Future<void> _refreshCallNotification(Map<String, dynamic> callData) async {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  // Android notification details
-  const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-    'call_channel_id',
-    'Call Notifications',
-    channelDescription: 'Used for incoming call notifications',
-    importance: Importance.max,
-    priority: Priority.max,
-    showWhen: true,
-    enableVibration: true,
-    playSound: true,
-    sound: RawResourceAndroidNotificationSound('incoming_call'),
-    fullScreenIntent: true,
-    ongoing: true,
-  );
-
-  // iOS notification details
-  const DarwinNotificationDetails iOSDetails = DarwinNotificationDetails(
-    presentAlert: true,
-    presentBadge: true,
-    presentSound: true,
-    sound: 'incoming_call.mp3',
-    interruptionLevel: InterruptionLevel.critical,
-  );
-
-  const NotificationDetails platformDetails = NotificationDetails(
-    android: androidDetails,
-    iOS: iOSDetails,
-  );
-
-  // Show notification
-  await flutterLocalNotificationsPlugin.show(
-    999, // Use consistent ID for refreshing
-    'Ongoing Call',
-    callData['callerName'] ?? 'Unknown Caller',
-    platformDetails,
-    payload: 'call:${callData['roomId']}',
-  );
-}
-
-// Handle call service task
-Future<void> _handleCallServiceTask(Map<String, dynamic> inputData) async {
-  try {
-    // Store call data
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('has_active_call', true);
-    await prefs.setString('active_call_data', jsonEncode(inputData));
-
-    // Show notification
-    await _refreshCallNotification(inputData);
-  } catch (e) {
-    print('🚨 Error in call service task: $e');
-  }
-}
-
-// Background message handler for Firebase
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // Initialize for background processing
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
-  print("🔔 Background message received: ${message.messageId}");
-
-  if (message.data['type'] == 'call') {
-    // Initialize notifications
-    FlutterLocalNotificationsPlugin fln = FlutterLocalNotificationsPlugin();
-
-    // Initialize local notifications
-    const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    const DarwinInitializationSettings iOSSettings =
-        DarwinInitializationSettings();
-    const InitializationSettings initSettings = InitializationSettings(
-      android: androidSettings,
-      iOS: iOSSettings,
-    );
-    await fln.initialize(initSettings);
+  // Refresh call notification to ensure it's visible
+  Future<void> _refreshCallNotification(Map<String, dynamic> callData) async {
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
 
     // Android notification details
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
-      'call_channel_id',
-      'Call Notifications',
-      channelDescription: 'Used for incoming call notifications',
-      importance: Importance.max,
-      priority: Priority.max,
-      showWhen: true,
-      enableVibration: true,
-      playSound: true,
-      sound: RawResourceAndroidNotificationSound('incoming_call'),
-      fullScreenIntent: true,
-    );
+          'call_channel_id',
+          'Call Notifications',
+          channelDescription: 'Used for incoming call notifications',
+          importance: Importance.max,
+          priority: Priority.max,
+          showWhen: true,
+          enableVibration: true,
+          playSound: true,
+          sound: RawResourceAndroidNotificationSound('incoming_call'),
+          fullScreenIntent: true,
+          ongoing: true,
+        );
 
     // iOS notification details
     const DarwinNotificationDetails iOSDetails = DarwinNotificationDetails(
@@ -672,25 +701,104 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     );
 
     // Show notification
-    await fln.show(
-      message.hashCode,
-      message.notification?.title ?? 'Incoming Call',
-      message.notification?.body ?? 'Someone is calling you',
+    await flutterLocalNotificationsPlugin.show(
+      999, // Use consistent ID for refreshing
+      'Ongoing Call',
+      callData['callerName'] ?? 'Unknown Caller',
       platformDetails,
-      payload: 'call:${message.data['roomId']}',
+      payload: 'call:${callData['roomId']}',
     );
-
-    // Store call data
-    Map<String, dynamic> callData = {
-      'callerId': message.data['callerId'] ?? '',
-      'callerName': message.data['callerName'] ?? 'Unknown Caller',
-      'callType': message.data['callType'] ?? 'video',
-      'roomId': message.data['roomId'] ?? '',
-      'caller_profile_pic': message.data['caller_profile_pic'],
-    };
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('has_active_call', true);
-    await prefs.setString('active_call_data', jsonEncode(callData));
   }
-}}
+
+  // // Handle call service task
+  // Future<void> _handleCallServiceTask(Map<String, dynamic> inputData) async {
+  //   try {
+  //     // Store call data
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     await prefs.setBool('has_active_call', true);
+  //     await prefs.setString('active_call_data', jsonEncode(inputData));
+  //
+  //     // Show notification
+  //     await _refreshCallNotification(inputData);
+  //   } catch (e) {
+  //     print('🚨 Error in call service task: $e');
+  //   }
+  // }
+
+  // Background message handler for Firebase
+  @pragma('vm:entry-point')
+  Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+    // Initialize for background processing
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+
+    print("🔔 Background message received: ${message.messageId}");
+
+    if (message.data['type'] == 'call') {
+      // Initialize notifications
+      FlutterLocalNotificationsPlugin fln = FlutterLocalNotificationsPlugin();
+
+      // Initialize local notifications
+      const AndroidInitializationSettings androidSettings =
+          AndroidInitializationSettings('@mipmap/ic_launcher');
+      const DarwinInitializationSettings iOSSettings =
+          DarwinInitializationSettings();
+      const InitializationSettings initSettings = InitializationSettings(
+        android: androidSettings,
+        iOS: iOSSettings,
+      );
+      await fln.initialize(initSettings);
+
+      // Android notification details
+      const AndroidNotificationDetails androidDetails =
+          AndroidNotificationDetails(
+            'call_channel_id',
+            'Call Notifications',
+            channelDescription: 'Used for incoming call notifications',
+            importance: Importance.max,
+            priority: Priority.max,
+            showWhen: true,
+            enableVibration: true,
+            playSound: true,
+            sound: RawResourceAndroidNotificationSound('incoming_call'),
+            fullScreenIntent: true,
+          );
+
+      // iOS notification details
+      const DarwinNotificationDetails iOSDetails = DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+        sound: 'incoming_call.mp3',
+        interruptionLevel: InterruptionLevel.critical,
+      );
+
+      const NotificationDetails platformDetails = NotificationDetails(
+        android: androidDetails,
+        iOS: iOSDetails,
+      );
+
+      // Show notification
+      await fln.show(
+        message.hashCode,
+        message.notification?.title ?? 'Incoming Call',
+        message.notification?.body ?? 'Someone is calling you',
+        platformDetails,
+        payload: 'call:${message.data['roomId']}',
+      );
+
+      // Store call data
+      Map<String, dynamic> callData = {
+        'callerId': message.data['callerId'] ?? '',
+        'callerName': message.data['callerName'] ?? 'Unknown Caller',
+        'callType': message.data['callType'] ?? 'video',
+        'roomId': message.data['roomId'] ?? '',
+        'caller_profile_pic': message.data['caller_profile_pic'],
+      };
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('has_active_call', true);
+      await prefs.setString('active_call_data', jsonEncode(callData));
+    }
+  }
+}

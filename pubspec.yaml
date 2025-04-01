@@ -36,6 +36,7 @@ dependencies:
   flutter_login: ^5.0.0
   wakelock_plus: ^1.2.10
   mime_type:
+  flutter_background_service:
 
 dev_dependencies:
   flutter_test:
