@@ -2,9 +2,9 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-const appId = "004e78b9715c4733b1541590b261c7a8";
+const appId = "9bb377e46be1446a84d192c24b179009";
 const token =
-    "007eJxTYAh47rLvtLuq4rRdtaHPkhxsxGWffT+aZJBia6S8br9rXokCg4GBSaq5RZKluaFpsom5sXGSoamJoamlQZKRmWGyeaLFtsXP0hsCGRki2dxYGRkgEMTnZUhMzy9KjE/LKS0pSS1iYAAA5B8g6w==";
+    "007eJxTYJjlvc1+4kP2vaubAtKNZCWXcpTtXPa87cCD42kCf5kenzynwGCZlGRsbp5qYpaUamhiYpZoYZJiaGmUbGSSZGhuaWBg+b/9dXpDICNDwNKFjIwMEAjiCzIkpucXJSqU5Gen5imUJWZWJjIwAABsbCXE";
 const channel = "agora_flutter";
 
 class AgoraConnectView extends StatefulWidget {

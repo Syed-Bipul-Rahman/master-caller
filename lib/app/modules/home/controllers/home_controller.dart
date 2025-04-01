@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:master_caller/app/modules/callScreen/views/call_screen_view.dart';
-
+import 'package:master_caller/app/routes/app_pages.dart';
 import '../../../../common/essentials/model/user_model.dart';
 import '../../../../common/replacements/api_checker.dart';
 import '../../../../common/replacements/api_client.dart';
@@ -65,10 +64,12 @@ class HomeController extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       isLoading(false);
       //page route to login page
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => CallScreenView(callData: {})),
-      );
+
+      Get.toNamed(Routes.CALL_SCREEN);
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => CallScreenView(callData: {})),
+      // );
 
       if (kDebugMode) {
         print("SUCCESS BODY========>${response.body}");
